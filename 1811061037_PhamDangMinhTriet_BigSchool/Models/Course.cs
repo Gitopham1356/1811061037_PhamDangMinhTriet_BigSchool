@@ -1,9 +1,7 @@
-﻿using Microsoft.Build.Framework.XamlTypes;
+﻿
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+
 
 namespace _1811061037_PhamDangMinhTriet_BigSchool.Models
 {
@@ -19,7 +17,6 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Models
         public Category Category { get; set; }
         [Required]
         public byte CategoryId { get; set; }
-
 
     }
 
