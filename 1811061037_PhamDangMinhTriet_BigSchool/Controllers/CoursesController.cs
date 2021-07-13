@@ -28,7 +28,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
             return View(viewModel);
         }
-        // POST: Courses..asd
+        // POST: Courses
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
