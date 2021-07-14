@@ -9,6 +9,8 @@
 <ul class="course">
     @foreach (var course in Model)
     {
+        if (!course.IsCanceled)
+        {
         <li>
             <div class="date">
                 <div class="month">
@@ -30,13 +32,14 @@
             </div>
 
             <div class="action">
-                <a href="@Url.Action("Edit","Courses", new { id = course.Id})">Edit |</a>
+                <a href="@Url.Action("Edit", "Courses", new { id = course.Id })">Edit |</a>
                 <a href="#" class="js-cancel-course" data-course-id="@course.Id">Delete</a>
 
             </div>
 
 
         </li>
+        }
     }
 
 

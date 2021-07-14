@@ -3,9 +3,11 @@
 
 @{
     ViewBag.Title = "Following page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 <div class="row">
     <ul class="course">
         @foreach (var follow in Model.UpcommingCourses)
@@ -16,7 +18,7 @@
                         @follow.Lecturer.Name
                     </span>
                 </div>
-                    <a href="#" class="js-unfollow" data-follower-id="@follow.Lecturer.Followers">UnFollow</a>
+                <a href="#" class="js-unfollow" data-follower-id="@follow.Lecturer.Followers">UnFollow</a>
             </li>
         }
     </ul>
@@ -24,23 +26,23 @@
 
 @section scripts{
     <script>
-        $(".js-unfollow").click(function (e) {
-            e.preventDefault();
-            var link = $(e.target);
-            bootbox.confirm("Are you sure to cancel?", function () {
-
-                $.ajax({
-                    url: "/api/followings/" + link.attr('data-follower-id'),
-                    method: "DELETE"
-                }).done(function () {
-                    link.parents("li").fadeOut(function () {
-                        this.remove();
+        $(function () {
+            $(".js-unfollow").click(function (e) {
+                e.preventDefault();
+                var link = $(e.target);
+                bootbox.confirm("Are you sure to cancel?", function () {
+                    $.ajax({
+                        url: "/api/followings/" + link.attr("data-follower-id"),
+                        method: "DELETE"
+                    }).done(function () {
+                        link.parents("li").fadeOut(function () {
+                            this.remove();
+                        });
+                    }).fail(function () {
+                        alert("Something failed");
                     });
-                }).fail(function () {
-                    alert("Something failed");
                 });
-
             });
-        });
+        })
     </script>
 }

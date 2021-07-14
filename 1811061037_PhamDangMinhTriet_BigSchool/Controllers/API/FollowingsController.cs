@@ -51,5 +51,5 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers.API
             return Ok();
         }
 
-}
+    }
 }
