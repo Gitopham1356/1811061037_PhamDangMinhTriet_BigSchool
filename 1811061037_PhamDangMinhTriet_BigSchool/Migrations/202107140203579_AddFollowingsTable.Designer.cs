@@ -13,7 +13,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202107031946445_AddFollowingsTable"; }
+            get { return "202107140203579_AddFollowingsTable"; }
         }
         
         string IMigrationMetadata.Source

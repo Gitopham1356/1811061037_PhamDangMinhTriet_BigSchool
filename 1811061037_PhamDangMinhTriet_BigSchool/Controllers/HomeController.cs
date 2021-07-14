@@ -33,7 +33,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
             {
                 UpcommingCourses = upcommingCourses,
                 ShowAction = User.Identity.IsAuthenticated,
-                Followings = _dbContext.Followings.Where(f => userId != null && f.FolloweeId == userId).ToList(),
+                Followings = _dbContext.Followings.Where(f => userId != null && f.FollowerId == userId).ToList(),
                 Attendances = _dbContext.Attendances.Include(a => a.Course).ToList()
 
             };

@@ -21,28 +21,6 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Attend([FromBody] int courseId)
-        {
-            var userId = User.Identity.GetUserId();
-            if (_dbContext.Attendances.Any(a => a.AttendeeId == userId && a.CourseId == courseId))
-            {
-                return BadRequest("The Attendance already exits");
-            }
-            var attendance = new Attendance
-            {
-                CourseId = courseId,
-                AttendeeId = User.Identity.GetUserId()
-            };
-
-            _dbContext.Attendances.Add(attendance);
-            _dbContext.SaveChanges();
-
-            return Ok();
-
-        }
-
-
-        [HttpPost]
         public IHttpActionResult Attend(AttendanceDto AttendanceDto)
         {
             var userId = User.Identity.GetUserId();

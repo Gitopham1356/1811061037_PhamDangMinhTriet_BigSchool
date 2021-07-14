@@ -17,6 +17,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers.API
         {
             _dbContext = new ApplicationDbContext();
         }
+
         [HttpDelete]
         public IHttpActionResult Cancel(int Id)
         {

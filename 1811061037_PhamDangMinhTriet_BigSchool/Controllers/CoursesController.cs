@@ -1,9 +1,12 @@
-﻿using _1811061037_PhamDangMinhTriet_BigSchool.Models;
+﻿
+using _1811061037_PhamDangMinhTriet_BigSchool.Models;
 using _1811061037_PhamDangMinhTriet_BigSchool.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
@@ -27,8 +30,11 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
             };
 
             return View(viewModel);
+
+
+
         }
-        // POST: Courses
+
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -39,13 +45,13 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
                 viewModel.Categories = _dbContext.Categories.ToList();
                 return View("Create", viewModel);
             }
+
             var course = new Course
             {
                 LecturerId = User.Identity.GetUserId(),
                 Datetime = viewModel.GetDateTime(),
                 CategoryId = viewModel.Category,
-                Place = viewModel.Place,
-                
+                Place = viewModel.Place
             };
             _dbContext.Courses.Add(course);
             _dbContext.SaveChanges();
@@ -79,14 +85,15 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
         public ActionResult Following()
         {
             var userId = User.Identity.GetUserId();
-            var followings = _dbContext.Followings
-                .Where(a => a.FolloweeId == userId)
-                .Select(a => a.Follower)
+
+            var following = _dbContext.Followings
+                .Where(a => a.FollowerId == userId)
+                .Select(a => a.Followee)
                 .ToList();
 
-            var viewModel = new FollowingViewModel
+            var viewModel = new CoursesViewModel
             {
-                Followings = followings,
+                Followings = (IEnumerable<Following>)following,
                 ShowAction = User.Identity.IsAuthenticated
             };
 
@@ -98,18 +105,16 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            var courses = _dbContext.Courses
-                .Where(c => c.LecturerId == userId && c.Datetime > DateTime.Now)
+            var b = _dbContext.Courses
                 .Include(c => c.Lecturer)
                 .Include(c => c.Category)
-                .ToList();
-               
+                .Where(c => c.Datetime > DateTime.Now && c.LecturerId == userId).ToList();
 
 
-            return View(courses);
+            return View(b);
+
 
         }
-
         [Authorize]
         public ActionResult Edit(int id)
         {
@@ -122,9 +127,9 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
                 Date = course.Datetime.ToString("dd/MM/yyyy"),
                 Time = course.Datetime.ToString("HH:mm"),
                 Place = course.Place,
-                Category = course.CategoryId,
                 Heading = "Edit Course",
                 Id = course.Id
+
 
             };
 
@@ -132,23 +137,24 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
         }
 
+
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(CourseViewModel viewModel)
+        public ActionResult Update(CourseViewModel courseView)
         {
             if (!ModelState.IsValid)
             {
-                viewModel.Categories = _dbContext.Categories.ToList();
-                return View("Create", viewModel);
+                courseView.Categories = _dbContext.Categories.ToList();
+                return View("Create", courseView);
             }
 
             var userId = User.Identity.GetUserId();
-            var course = _dbContext.Courses.Single(c => c.Id == viewModel.Id && c.LecturerId == userId);
+            var course = _dbContext.Courses.Single(c => c.Id == courseView.Id && c.LecturerId == userId);
 
-            course.Place = viewModel.Place;
-            course.Datetime = viewModel.GetDateTime();
-            course.CategoryId = viewModel.Category;
+            course.Place = courseView.Place;
+            course.Datetime = courseView.GetDateTime();
+            course.CategoryId = courseView.Category;
 
             _dbContext.SaveChanges();
 

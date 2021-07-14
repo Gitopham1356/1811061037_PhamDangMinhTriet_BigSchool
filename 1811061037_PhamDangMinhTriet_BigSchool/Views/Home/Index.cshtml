@@ -1,10 +1,8 @@
 ﻿@model _1811061037_PhamDangMinhTriet_BigSchool.ViewModels.CoursesViewModel
-@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<h2>Following page</h2>
 <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 <div class="row">
     <ul class="course">
@@ -28,13 +26,14 @@
                         {
                             if (Model.Followings.Any(f => f.FolloweeId == course.Lecturer.Id))
                             {
-                                <button data-user-id="@course.Lecturer.Id" class="btn btn-default btn-sm js-toggle-follow">Following</button>
+                                <button data-user-id="@course.Lecturer.Id" class="btn btn-sm btn-info">Following</button>
                             }
                             else
                             {
                                 <button data-user-id="@course.Lecturer.Id" class="btn btn-default btn-sm js-toggle-follow">Follow?</button>
                             }
                         }
+
 
                     </span>
                     <span class="category">
@@ -43,15 +42,10 @@
                     </span>
                     @if (Model.ShowAction)
                     {
-                        if (Model.Attendances.Any(x => x.CourseId == course.Id))
-                        {
-                            <button data-course-id="@course.Id" class="btn btn-sm btn-info">Going</button> 
-                         }
-                        else
-                        {
-                            <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>}
-                    }
+                        
+                            <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
 
+                    }
 
                 </div>
 
@@ -59,6 +53,8 @@
         }
 
     </ul>
+
+
     @section scripts{
         <script>
             $(document).ready(function () {
@@ -84,7 +80,10 @@
                     var button = $(e.target);
                     $.post("/api/followings", { FolloweeId: button.attr("data-user-id") })
                         .done(function () {
-                            button.text("Following");
+                            button
+                                .removeClass(" btn-default")
+                                .addClass("btn-info")
+                                .text("Following");
 
                         })
                         .fail(function () {
@@ -95,12 +94,8 @@
                 });
 
             });
+
         </script>
-
-
-
     }
-
-
 
 </div>

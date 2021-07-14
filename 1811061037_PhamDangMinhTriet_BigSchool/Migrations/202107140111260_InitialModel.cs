@@ -58,15 +58,14 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Migrations
                 "dbo.Followings",
                 c => new
                     {
-                        FollwerId = c.String(nullable: false, maxLength: 128),
+                        FollowerId = c.String(nullable: false, maxLength: 128),
                         FolloweeId = c.String(nullable: false, maxLength: 128),
-                        Follower_Id = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => new { t.FollwerId, t.FolloweeId })
-                .ForeignKey("dbo.AspNetUsers", t => t.Follower_Id)
+                .PrimaryKey(t => new { t.FollowerId, t.FolloweeId })
+                .ForeignKey("dbo.AspNetUsers", t => t.FollowerId)
                 .ForeignKey("dbo.AspNetUsers", t => t.FolloweeId)
-                .Index(t => t.FolloweeId)
-                .Index(t => t.Follower_Id);
+                .Index(t => t.FollowerId)
+                .Index(t => t.FolloweeId);
             
             CreateTable(
                 "dbo.AspNetUserLogins",
@@ -98,6 +97,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        IsCanceled = c.Boolean(nullable: false),
                         LecturerId = c.String(nullable: false, maxLength: 128),
                         Place = c.String(nullable: false, maxLength: 255),
                         Datetime = c.DateTime(nullable: false),
@@ -140,7 +140,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Followings", "FolloweeId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Followings", "Follower_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Followings", "FollowerId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Courses", new[] { "CategoryId" });
@@ -148,8 +148,8 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
-            DropIndex("dbo.Followings", new[] { "Follower_Id" });
             DropIndex("dbo.Followings", new[] { "FolloweeId" });
+            DropIndex("dbo.Followings", new[] { "FollowerId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Attendances", new[] { "AttendeeId" });

@@ -7,13 +7,13 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class FollowerId : IMigrationMetadata
+    public sealed partial class AddIsCanceledColumnToCourse : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FollowerId));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddIsCanceledColumnToCourse));
         
         string IMigrationMetadata.Id
         {
-            get { return "202107032033248_FollowerId"; }
+            get { return "202107140204390_AddIsCanceledColumnToCourse"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,92 +1,46 @@
-﻿@model _1811061037_PhamDangMinhTriet_BigSchool.ViewModels.CoursesViewModel
+﻿@using Microsoft.AspNet.Identity
+@model _1811061037_PhamDangMinhTriet_BigSchool.ViewModels.CoursesViewModel
 
+@{
+    ViewBag.Title = "Following page";
+}
 
-<h2>Follow</h2>
-
-<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+<!DOCTYPE html>
 <div class="row">
     <ul class="course">
-        @foreach (var course in Model.UpcommingCourses)
+        @foreach (var follow in Model.UpcommingCourses)
         {
             <li>
-                <div class="date">
-                    <div class="month">
-                        @course.Datetime.ToString("MM")
-                    </div>
-                    <div class="day">
-                        @course.Datetime.ToString("dd")
-
-                    </div>
-
-                </div>
-                <div class="detail">
-                    <span class="lecture">
-                        @course.Lecturer.Name
-                        @if (Model.ShowAction)
-                        {
-                            <button class="btn btn-default btn-sm js-toggle-follow" data--user-id="@course.Lecturer.Id">Follow</button>
-                        }
-
-
+                <div class="details">
+                    <span class="lecturer">
+                        @follow.Lecturer.Name
                     </span>
-                    <span class="category">
-                        @course.Category.Name
-
-                    </span>
-                    @if (Model.ShowAction)
-                    {
-                        <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
-
-                    }
-
-
                 </div>
-
+                    <a href="#" class="js-unfollow" data-follower-id="@follow.Lecturer.Followers">UnFollow</a>
             </li>
         }
-
     </ul>
-    @section scripts{
+</div>
 
-        <script>
-            const { target } = require("modernizr");
+@section scripts{
+    <script>
+        $(".js-unfollow").click(function (e) {
+            e.preventDefault();
+            var link = $(e.target);
+            bootbox.confirm("Are you sure to cancel?", function () {
 
-            $(document).ready(function () {
-
-                $(".js-toggle-attendance").click(function (e) {
-
-                    var button = $(e.target);
-                    $.post("/api/Attendances", { courseId.button.attr("data-course-id") })
-                        .done(function () {
-                            button.removeClass("btn-default").addClass("btn-info").text("Going");
-                        })
-                        .fail(function () {
-                            alert("Something failed");
-                        });
-
-
-                });
-                $(".js-toggle-follow").click(function (e) {
-
-                    var button = $(target);
-                    $.post("/api/followings", { followeeId: button.attr("data-user-id") })
-                        .done(function () {
-
-                            button.text("Following");
-                        })
-                        .fail(function () {
-
-                            alert("Something failed");
-
-                        });
-
+                $.ajax({
+                    url: "/api/followings/" + link.attr('data-follower-id'),
+                    method: "DELETE"
+                }).done(function () {
+                    link.parents("li").fadeOut(function () {
+                        this.remove();
+                    });
+                }).fail(function () {
+                    alert("Something failed");
                 });
 
             });
-
-
-
-        </script>
-
-    }
-</div>
+        });
+    </script>
+}
