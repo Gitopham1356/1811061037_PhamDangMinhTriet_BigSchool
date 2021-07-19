@@ -1,7 +1,13 @@
-﻿@model _1811061037_PhamDangMinhTriet_BigSchool.ViewModels.CoursesViewModel
+﻿@using Microsoft.AspNet.Identity;
+@using _1811061037_PhamDangMinhTriet_BigSchool.Models
+@model _1811061037_PhamDangMinhTriet_BigSchool.ViewModels.CoursesViewModel
 @{
     ViewBag.Title = "Attending";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var userId = User.Identity.GetUserId();
+    ApplicationDbContext _dbContext = new ApplicationDbContext();
 }
 <h2>Attending</h2>
 
@@ -23,14 +29,16 @@
                 <div class="detail">
                     <span class="lecture">
                         @course.Lecturer.Name
-                        @if (course.IsCanceled)
+                        @if (Model.ShowAction)
                         {
-                            <span class="label label-warning">Canceled</span>
-                        }
-
-                        @if (Model.ShowAction && !course.IsCanceled)
-                        {
-                            <button class="btn btn-link btn-sm js-toggle-follow" data--user-id="@course.LecturerId">Follow</button>
+                            if (_dbContext.Followings.Any(f => f.FolloweeId == course.Lecturer.Id && f.FollowerId == userId))
+                            {
+                                <button data-user-id="@course.Lecturer.Id" class="btn btn-sm btn-info js-toggle-follow">Following</button>
+                            }
+                            else
+                            {
+                                <button data-user-id="@course.Lecturer.Id" class="btn btn-default btn-sm js-toggle-follow">Follow?</button>
+                            }
                         }
 
 
@@ -39,31 +47,59 @@
                         @course.Category.Name
 
                     </span>
-
+                    @if (Model.ShowAction)
+                    {
+                        if (_dbContext.Attendances.Any(x => x.CourseId == course.Id && x.AttendeeId == userId))
+                        {
+                            <button data-course-id="@course.Id" class="btn btn-sm btn-info js-toggle-attendance">Going</button>
+                        }
+                     
+                    }
 
                 </div>
 
             </li>
         }
     </ul>
-    @section scripts{
-
-        <script>
-            const { target } = require("modernizr");
-
-            $(".js-toggle-follow").click(function (e) {
-                var button = $(target);
-                $.post("/api/Followings", { followeeId: button.attr("data-user-id") })
-                    .done(function () {
-                        button.text("Following");
-                    })
-                    .fail(function () {
-                        alert("Something failed");
-                    });
-            });
-                    
-        </script>
-
-    }
 
 </div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $(".js-toggle-attendance").click(function (e) {
+                e.preventDefault();
+                var link = $(e.target);
+                bootbox.confirm("Are you sure to cancel?", function () {
+                    $.ajax({
+                        url: "/api/attendances/" + link.attr("data-course-id"),
+                        method: "DELETE"
+                    }).done(function () {
+                        link.parents("li").fadeOut(function () {
+                            this.remove();
+                        });
+                    }).fail(function () {
+                        alert("Something failed");
+                    });
+                });
+            });
+            $(".js-toggle-follow").click(function (e) {
+                var button = $(e.target);
+                $.post("/api/followings", { FolloweeId: button.attr("data-user-id") })
+                    .done(function () {
+                        button
+                            .removeClass(" btn-default")
+                            .addClass("btn-info")
+                            .text("Following");
+
+                    })
+                    .fail(function () {
+
+                        alert("Something failed");
+                    });
+
+            });
+
+        });
+
+    </script>
+}

@@ -13,7 +13,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.ViewModels
         {
             DateTime dateTime;
             var isValid = DateTime.TryParseExact(Convert.ToString(value),
-                "dd/MM/yyyy",
+               "yyyy-MM-dd",
                 CultureInfo.CurrentCulture,
                 DateTimeStyles.None,
                 out dateTime);

@@ -32,27 +32,12 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
             var viewModel = new CoursesViewModel
             {
                 UpcommingCourses = upcommingCourses,
-                ShowAction = User.Identity.IsAuthenticated,
-                Followings = _dbContext.Followings.Where(f => userId != null && f.FollowerId == userId).ToList(),
-                Attendances = _dbContext.Attendances.Include(a => a.Course).ToList()
-
+                ShowAction = User.Identity.IsAuthenticated             
             };
 
             return View(viewModel);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

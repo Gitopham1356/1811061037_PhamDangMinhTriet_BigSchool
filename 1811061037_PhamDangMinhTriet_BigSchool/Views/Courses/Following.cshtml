@@ -1,24 +1,24 @@
-﻿@using Microsoft.AspNet.Identity
-@model _1811061037_PhamDangMinhTriet_BigSchool.ViewModels.CoursesViewModel
+﻿@using _1811061037_PhamDangMinhTriet_BigSchool.Models
+@model IEnumerable<ApplicationUser>
 
 @{
-    ViewBag.Title = "Following page";
+    ViewBag.Title = "Following";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<h2>Following</h2>
 <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 <div class="row">
     <ul class="course">
-        @foreach (var follow in Model.UpcommingCourses)
+        @foreach (var follow in Model)
         {
             <li>
                 <div class="details">
                     <span class="lecturer">
-                        @follow.Lecturer.Name
+                        @follow.Name
                     </span>
                 </div>
-                <a href="#" class="js-unfollow" data-follower-id="@follow.Lecturer.Followers">UnFollow</a>
+                <button data-user-id="@follow.Id" class="btn btn-info btn-sm js-toggle-unfollow" style="width:80px">Unfollow</button>
             </li>
         }
     </ul>
@@ -27,12 +27,12 @@
 @section scripts{
     <script>
         $(function () {
-            $(".js-unfollow").click(function (e) {
+            $(".js-toggle-unfollow").click(function (e) {
                 e.preventDefault();
                 var link = $(e.target);
-                bootbox.confirm("Are you sure to cancel?", function () {
+                bootbox.confirm("Are you sure to unfollow?", function () {
                     $.ajax({
-                        url: "/api/followings/" + link.attr("data-follower-id"),
+                        url: "/api/followings/" + link.attr("data-user-id"),
                         method: "DELETE"
                     }).done(function () {
                         link.parents("li").fadeOut(function () {

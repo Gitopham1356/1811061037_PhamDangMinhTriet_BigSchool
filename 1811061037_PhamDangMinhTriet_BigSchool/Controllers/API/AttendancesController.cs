@@ -33,7 +33,6 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
                 CourseId = AttendanceDto.courseId,
                 AttendeeId = userId
 
-
             };
 
             _dbContext.Attendances.Add(attendance);
@@ -41,6 +40,22 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
             return Ok();
 
+        }
+        [HttpDelete]
+        public IHttpActionResult DeleteAttendance(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var attendance = _dbContext.Attendances
+                .SingleOrDefault(a => a.AttendeeId == userId && a.CourseId == id);
+
+            if (attendance == null)
+                return NotFound();
+
+            _dbContext.Attendances.Remove(attendance);
+            _dbContext.SaveChanges();
+
+            return Ok(id);
         }
 
     }

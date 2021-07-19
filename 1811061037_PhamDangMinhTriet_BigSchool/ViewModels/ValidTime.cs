@@ -15,7 +15,8 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.ViewModels
             var isValid = DateTime.TryParseExact(Convert.ToString(value),
                 "HH:mm",
                 CultureInfo.CurrentCulture,
-                DateTimeStyles.None, out dateTime);
+                DateTimeStyles.None,
+                out dateTime);
 
             return isValid;
         }

@@ -82,22 +82,17 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
         }
 
+        [Authorize]
         public ActionResult Following()
         {
             var userId = User.Identity.GetUserId();
 
-            var following = _dbContext.Followings
+            var listLecturer = _dbContext.Followings
                 .Where(a => a.FollowerId == userId)
-                .Select(a => a.Followee)
-                .ToList();
+                .Select(a => a.Followee);
 
-            var viewModel = new CoursesViewModel
-            {
-                Followings = (IEnumerable<Following>)following,
-                ShowAction = User.Identity.IsAuthenticated
-            };
 
-            return View(viewModel);
+            return View(listLecturer);
         }
 
         [Authorize]
@@ -105,13 +100,13 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            var b = _dbContext.Courses
+            var mine = _dbContext.Courses
                 .Include(c => c.Lecturer)
                 .Include(c => c.Category)
                 .Where(c => c.Datetime > DateTime.Now && c.LecturerId == userId).ToList();
 
 
-            return View(b);
+            return View(mine);
 
 
         }
@@ -158,7 +153,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
             _dbContext.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Mine", "Home");
 
 
         }
