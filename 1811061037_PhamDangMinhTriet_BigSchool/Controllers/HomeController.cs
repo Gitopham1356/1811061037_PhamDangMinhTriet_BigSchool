@@ -18,7 +18,8 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
         {
             _dbContext = new ApplicationDbContext();
         }
-        //hiển thị danh sách các khoá học sắp diễn ra có trong db(table course)
+
+        //hiển thị danh sách các khoá học sắp diễn ra có trong db
         public ActionResult Index()
         {
 

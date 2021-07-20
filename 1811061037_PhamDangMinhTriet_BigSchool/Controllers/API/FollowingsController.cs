@@ -18,7 +18,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers.API
             _dbContext = new ApplicationDbContext();
         }
 
-        //theo dõi các giảng viên (khai báo ở index.html và attending.cshtml)
+        //theo dõi các giảng viên 
         [HttpPost]
         public IHttpActionResult Follow(FollowingDto followingDTO)
         {
@@ -39,7 +39,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers.API
 
 
         }
-        // huỷ theo dõi các giảng viên có trong lecturer i'm following( khai báo ở following.cshtml)
+        // huỷ theo dõi các giảng viên có trong lecturer i'm following
         [HttpDelete]
         public IHttpActionResult UnFollow(string id)
         {

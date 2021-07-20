@@ -35,7 +35,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
 
         }
-        // tạo mới khoá học sau đó direct về trang mine ( của m là trang index)
+        // tạo mới khoá học sau đó direct về trang mine
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -60,7 +60,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
             return RedirectToAction("Mine", "Courses");
         }
 
-        // hiển thị các khoá học đã tham gia ( attending.cshtml)
+        // hiển thị các khoá học đã tham gia 
         [Authorize]
         public ActionResult Attending()
         {
