@@ -18,6 +18,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers.API
             _dbContext = new ApplicationDbContext();
         }
 
+        // xoá khoá học mà bản thân tạo ra( khai báo ở Mine.cshtml)
         [HttpDelete]
         public IHttpActionResult Cancel(int Id)
         {

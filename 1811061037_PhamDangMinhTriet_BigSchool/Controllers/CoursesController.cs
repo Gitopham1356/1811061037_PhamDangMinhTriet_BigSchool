@@ -20,6 +20,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
             _dbContext = new ApplicationDbContext();
         }
         // GET: Courses
+        // hiển thị form tạo mới khoá học
         [Authorize]
         public ActionResult Create()
         {
@@ -34,7 +35,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
 
         }
-
+        // tạo mới khoá học sau đó direct về trang mine ( của m là trang index)
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -56,9 +57,10 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
             _dbContext.Courses.Add(course);
             _dbContext.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Mine", "Courses");
         }
 
+        // hiển thị các khoá học đã tham gia ( attending.cshtml)
         [Authorize]
         public ActionResult Attending()
         {
@@ -82,6 +84,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
         }
 
+        // hiển thị các giảng viên đã follow ( following.cshtml)
         [Authorize]
         public ActionResult Following()
         {
@@ -95,6 +98,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
             return View(listLecturer);
         }
 
+        // hiển thị các khoá học do bản thân tạo ra ( mine.cshtml)
         [Authorize]
         public ActionResult Mine()
         {
@@ -110,6 +114,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
 
         }
+        // hiển thị form edit
         [Authorize]
         public ActionResult Edit(int id)
         {
@@ -132,7 +137,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
         }
 
-
+        // update thông tin khoá học
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -153,7 +158,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
 
             _dbContext.SaveChanges();
 
-            return RedirectToAction("Mine", "Home");
+            return RedirectToAction("Mine", "Courses");
 
 
         }

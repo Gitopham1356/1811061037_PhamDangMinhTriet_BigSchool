@@ -49,11 +49,15 @@
                     </span>
                     @if (Model.ShowAction)
                     {
-                        if (_dbContext.Attendances.Any(x => x.CourseId == course.Id && x.AttendeeId == userId))
+                        if (_dbContext.Attendances.Any(x => x.CourseId == course.Id && x.AttendeeId == userId && _dbContext.Courses.Any(c => c.Id == x.CourseId && c.IsCanceled == false)))
                         {
                             <button data-course-id="@course.Id" class="btn btn-sm btn-info js-toggle-attendance">Going</button>
                         }
-                     
+                        else
+                        {
+                            <button data-course-id="@course.Id" class="btn btn-sm btn-warning js-toggle-attendance">Canceled</button>
+                        }
+
                     }
 
                 </div>

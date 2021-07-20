@@ -20,6 +20,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
             _dbContext = new ApplicationDbContext();
         }
 
+        //Tham gia khoá học
         [HttpPost]
         public IHttpActionResult Attend(AttendanceDto AttendanceDto)
         {
@@ -41,6 +42,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
             return Ok();
 
         }
+        // xoá khoá học khỏi danh sách khoá học tham gia
         [HttpDelete]
         public IHttpActionResult DeleteAttendance(int id)
         {
