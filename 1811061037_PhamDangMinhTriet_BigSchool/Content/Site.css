@@ -10,7 +10,7 @@
 }
 
 .navbar-inverse {
-    background-color: #d41d50;
+    background-color: #7c1dd4;
     border-color: #fbf6f6;
 }
 
@@ -22,8 +22,8 @@
         color: white;
     }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
+/* Override the default bootstrap behavior where horizontal description lists
+   will truncate terms that are too long to fit in the left column
 */
 .dl-horizontal dt {
     white-space: normal;
@@ -48,7 +48,7 @@ textarea {
 
         .course > li .date {
             text-align: center;
-            background-color: #d41d50;
+            background-color: #7c1dd4;
             color: white;
             width: 60px;
             border-radius: 8px
