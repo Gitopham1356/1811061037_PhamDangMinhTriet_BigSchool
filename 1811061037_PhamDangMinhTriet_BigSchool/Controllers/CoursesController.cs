@@ -20,7 +20,7 @@ namespace _1811061037_PhamDangMinhTriet_BigSchool.Controllers
             _dbContext = new ApplicationDbContext();
         }
         // GET: Courses
-        // hiển thị form tạo mới khoá học
+        // hiển thị form tạo mới khoá học nè
         [Authorize]
         public ActionResult Create()
         {
